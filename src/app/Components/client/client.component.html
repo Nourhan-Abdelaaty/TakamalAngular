@@ -1,0 +1,220 @@
+<section clas="bg-light">
+  <div class="container-page" id="container-page">
+    <div class="page-wrapper">
+        <div class="main-content ">
+          <div class="row">
+            <!-------------------YOUR CONTENT HERE BEGIN ------------------>
+       <div class="col-12 internal-page mb-3">
+        <div class="inner-box ">
+          <div class="title-box font-weight-normal">
+            العملاء
+          </div>
+          <div class="px-3 pt-3 pb-3 internal-box position-relative ">
+            <!-- Create Account -->
+            <div class="my-form row CreatAccount col-12"  *ngIf="!Show">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-md-4 col-lg-4 mb-3">
+                  <label for="Name">  اسم العميل </label>
+                  <input [(ngModel)]="Client.NameAr" type="text" class="form-control" id="Name" >
+              </div>
+              <div class="col-md-4 col-lg-4 mb-3">
+                <label for="Name">  عنوان العميل </label>
+                <input [(ngModel)]="Client.Address" type="text" class="form-control" id="Name" >
+            </div>
+            <div class="col-md-4 col-lg-4 mb-3">
+              <label for="Name"> الموبايل</label>
+              <input [(ngModel)]="Client.Mobile" type="text" class="form-control" id="Name" >
+            </div>
+            <div class="col-md-4 col-lg-4 mb-3">
+              <label for="Name"> تلفون1</label>
+              <input [(ngModel)]="Client.Phone1" type="text" class="form-control" id="Name" >
+            </div>
+            <div class="col-md-4 col-lg-4 mb-3">
+              <label for="Name"> تلفون2</label>
+              <input [(ngModel)]="Client.Phone2" type="text" class="form-control" id="Name" >
+            </div>
+            <div class="col-md-4 col-lg-4 mb-3">
+              <label for="Name"> واتس</label>
+              <input [(ngModel)]="Client.WhatsApp" type="text" class="form-control" id="Name" >
+            </div>
+            <div class="col-md-4 col-lg-4 mb-3">
+              <label for="Name"> ايميل</label>
+              <input [(ngModel)]="Client.Email" type="text" class="form-control" id="Name" >
+            </div>
+            <div class="col-md-4 col-lg-4 mb-3">
+              <label for="Name"> كود العميل</label>
+              <input [(ngModel)]="Client.ClientCode" type="text" class="form-control" id="Name" >
+            </div>
+            <div class="col-md-4 col-lg-4 mb-3">
+              <label for="Name"> الجنسيه</label>
+              <input [(ngModel)]="Client.Nationality" type="text" class="form-control" id="Name" >
+            </div>
+            <div class="col-md-4 col-lg-4 mb-3">
+              <label for="Name"> محل الاقامه</label>
+              <input [(ngModel)]="Client.Residence" type="text" class="form-control" id="Name" >
+            </div>
+              <div class="col-md-4 col-lg-4 mb-3">
+                <label for="Notes">توصيف</label>
+                <input [(ngModel)]="Client.Description" type="text" class="form-control" id="Notes" >
+
+
+
+              </div>
+              <div class="col-md-4 col-lg-4 mb-3">
+                <label for="Job">الوظيفه</label>
+                <input [(ngModel)]="Client.Job" type="text" class="form-control" id="Job" >
+              </div>
+              <div class="col-md-4 col-lg-4 mb-3">
+                <label for="CreatedByName">ادخال بواسطه</label>
+                <input [(ngModel)]="Client.CreatedByName" type="text" class="form-control" id="CreatedByName" >
+              </div>
+              <div class="col-md-4 col-lg-4 mb-3">
+                <label for="CreatedDate">ادخال في</label>
+                <input [(ngModel)]="Client.CreatedDate" type="date" class="form-control" id="CreatedDate" >
+              </div>
+
+
+            </div>
+   </div>
+   <br/>
+
+   <div class="col-12 mb-3 text-center mt-3">
+    <button (click)="Send(ConfirmModal)" class="btn btn-success px-4" id="saveBtn" >
+      <span *ngIf="Client.Id == 0">حفظ</span>
+      <span *ngIf="Client.Id != 0"> تعديل </span>
+    </button>
+    <button (click)="GetAllClient()" class="btn btn-success mx-3" id="ShowAccounts" ><span> عرض</span></button>
+    <button class="btn btn-info" (click)="ResetData()" *ngIf="Client.Id != 0"> جديد </button>
+    <button (click)="modalService.open(DeleteModal, { size: 'md',centered:true })" class="btn btn-danger mx-3 px-4" *ngIf="Client.Id != 0"> حذف</button>
+  </div>
+
+  </div>
+
+  <!-- Show Accouts -->
+  <div class='data-table AccountsTable text-left' *ngIf="Show">
+
+    <div class="col-12 text-start">
+      <button (click)="ResetData()" class="btn btn-success m-2" (click)="Show = !Show"> جديد + </button>
+    </div>
+
+    <div class='table-responsive'>
+      <div class="m-3 row">
+        <label for="table-complete-search" class="col-xs-3 col-sm-auto col-form-label">
+          بحث
+        </label>
+        <div class="col-md-5 col-lg-4 col-sm-auto">
+          <input
+            id="table-complete-search"
+            type="text"
+            class="form-control shadow-none"
+            name="searchTerm"
+            [(ngModel)]="_TableService.searchTerm"
+          />
+        </div>
+      </div>
+      <table  class="table  table-bordered table table-striped text-center">
+        <thead>
+          <tr>
+            <th></th>
+             <th> اسم العميل </th>
+             <th>محل الاقامه</th>
+             <th> توصيف  </th>
+             <th> الوظيفه  </th>
+             <th> ادخال بواسطة  </th>
+             <th> تاريخ الادخال  </th>
+             <th> اخر تعديل  </th>
+             <th> اخر تعديل في  </th>
+             <th> كود العميل</th>
+             <th>-</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="_TableService.Length > 0">
+                <tr *ngFor="let Unit of _TableService.DyamicArr$ | async;let i = index;trackBy: trackByMethod">
+                <td>{{i+1}}</td>
+                <td>{{Unit.NameAr}}</td>
+                <td>{{Unit.Residence}}</td>
+                <td>{{Unit.Description}}</td>
+                <td>{{Unit.Job}}</td>
+                <td>{{Unit.CreatedByName}}</td>
+                <td>{{Unit.CreatedDate?.substring(0,10)}}</td>
+                <td>{{Unit.ModifyByName}}</td>
+                <td>{{Unit.LastModifiedDate?.substring(0,10)}}</td>
+                <td>{{Unit.ClientCode}}</td>
+                <td>
+                <button (click)="ShowToEdite(Unit)"  class="Edit-btn edit-btn-row">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
+                <button (click)="Delete(Unit.Id)" class="trash-btn delete-btn-row">
+                  <i class="fa-solid fa-trash-can"></i>
+               </button>
+
+                </td>
+             </tr>
+        </tbody>
+        <tbody *ngIf="_TableService.Length == 0">
+          <tr>
+            <td colspan="16" class="alert alert-danger text-danger NotFoundData">
+              لا يوجد بيانات</td>
+          </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center p-2 mt-3">
+      <ngb-pagination (pageChange)="PageSize($event)" [rotate]="true" [collectionSize]="this.Paging.TotalItems" [(page)]="this.Paging.CurrentPage" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+    </div>
+  </div>
+            </div>
+          </div>
+        </div>
+
+       </div>
+            </div>
+          </div>
+
+</div>
+
+
+<ng-template #DeleteModal let-modal class="col-12" >
+
+  <div class="p-4 text-center bg-white">
+    <svg  width="100" height="100" fill="#f8bb86" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+      <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+    </svg>
+  </div>
+
+    <div class="modal-body col-12 text-start bg-white">
+
+      <h4 class="modal-title col-12 ">  AreYouSure  </h4>
+
+    <div class="text-center p-3 bg-white">
+      <button class="btn btn-danger btn-dangerCustom mx-3 py-2 px-5" (click)="Delete(Client.Id)"> Sure </button>
+      <button class="btn btn-light mx-3 py-2 px-5" (click)="modalService.dismissAll()"  > Close</button>
+    </div>
+
+    </div>
+
+</ng-template>
+
+<ng-template #ConfirmModal let-modal class="col-12" >
+  <div class="p-4 text-center bg-white">
+    <svg  width="100" height="100" fill="#dc3545" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+      <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+    </svg>
+  </div>
+
+  <div class="modal-body col-12 text-start bg-white">
+    <h4 class="modal-title col-12 text-danger">  {{_Apiservice.ErrorMassage}} </h4>
+
+    <div class="text-center p-3 bg-white">
+      <button class="btn btn-light mx-3 py-2 px-5" (click)="modalService.dismissAll()"  > الغاء </button>
+    </div>
+
+  </div>
+
+</ng-template>
+
+</section>
+
